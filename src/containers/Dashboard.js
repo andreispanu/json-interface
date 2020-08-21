@@ -22,7 +22,10 @@ import DevicesIcon from '@material-ui/icons/Devices';
 import SecurityIcon from '@material-ui/icons/Security';
 import WarningIcon from '@material-ui/icons/Warning';
 import InfoIcon from '@material-ui/icons/Info';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
 
+// Styling for elements
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -70,6 +73,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[100],
     padding: `${theme.spacing()}px ${theme.spacing(2)}px `
   },
+  itemFlex: {
+    backgroundColor: theme.palette.grey[100],
+    padding: `${theme.spacing()}px ${theme.spacing(2)}px `,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
   vulnerabilitiesItem: {
     backgroundColor: theme.palette.grey[100]
   },
@@ -91,6 +101,14 @@ const useStyles = makeStyles((theme) => ({
   },
   fontWeightBold: {
     fontWeight: theme.typography.fontWeightBold
+  },
+  viewed: {
+    paddingLeft: theme.spacing(1),
+    color: theme.palette.success.dark
+  },
+  notViewed: {
+    paddingLeft: theme.spacing(1),
+    color: theme.palette.error.dark
   }
 }));
 
@@ -197,7 +215,7 @@ const Dashboard = () => {
               if (key === 'read') {
                 notifications.push(
                   <div className={classes.messageItem} key={generateId()}>
-                    <div className={classes.item}><span className={classes.fontWeightBold}>{capitalizeFirstLetter(key)}</span>: {value.toString()}</div>
+                    <div className={classes.itemFlex}><span className={classes.fontWeightBold}>{capitalizeFirstLetter(key)}</span>: {value.toString()} {value ? <span className={classes.viewed}><CheckCircleIcon /></span> : <span className={classes.notViewed}><CancelIcon /></span>} </div>
                   </div>
                 )
               } else if (key === 'id') {
