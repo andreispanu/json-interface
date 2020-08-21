@@ -1,10 +1,10 @@
-# Test - react-node-express App
+# JSON-Object Dashboard App
 
 Test App example will use a Node JS framework.
 
 ## Installation
 
-Make sure the node version is up to date to install Test App.
+Make sure the node version is up to date to install the JSON-Object Dashboard App.
 Navigate to the root folder and run the install command.
 
 ```bash
@@ -19,14 +19,10 @@ After the packages have been installed run:
 npm run start
 ```
 
-This is an app that runs locally, we need to have the local server running in an additional tab. Open another tab and run:
+This is an app that pulls data from a local file containing the JSON object, we need to have the local server running in an additional tab. Open another tab and run:
 
 ```bash
 npm run serve
 ```
 
 If the console displays this message "Example app listening at http://localhost:4000" the local server should be running. 
-For code changes navigate to the src folder and update as necessary. The css files, svgs and images are located under the Static folder.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
