@@ -118,24 +118,25 @@ function TabPanel(props) {
 }
 
 const Dashboard = () => {
+
   const classes = useStyles();
   const data = useContext(DashboardContext);
+  const breakers = ['description', 'solution', 'references'];
+  const [showId, setShowId] = useState(false);
   const infoIcons = {
     highRiskIcon: <WarningIcon />,
     mediumRiskIcon: <WarningIcon />,
     lowRiskIcon: <WarningIcon />,
     infoRiskIcon: <InfoIcon />
   }
-  const breakers = ['description', 'solution', 'references'];
 
-  const [showId, setShowId] = useState(false);
-
+  // Toggle the id field
   const toggle = () => {
     setShowId(!showId)
   }
 
   // Tabs
-  const [value, setValue] = React.useState(1);
+  const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -157,6 +158,7 @@ const Dashboard = () => {
     )
   }
 
+  // Vilnerability icons display depending on risk
   function displayVulnerabilityIcon(risk) {
 
     // Example use of Destructuring
@@ -179,8 +181,7 @@ const Dashboard = () => {
     }
   }
 
-
-  // User Information Data Loop
+  // 1.User Information Data Loop
   const userDataLoop = () => {
     if (data.user !== undefined) {
 
@@ -222,6 +223,7 @@ const Dashboard = () => {
                 )
               }
             }
+            return notifications
           })
         } else {
           personalDetails.push(
@@ -235,16 +237,18 @@ const Dashboard = () => {
     }
   }
 
-  // Scan Data Loop
+  // 2.Scan Data Loop
   const resultsLoop = () => {
     if (data.scan !== undefined) {
       let source = data.scan;
+      // Insert Headers for each item
       let scanOverview = [listItemsGenerator('Scan Overview', <SearchIcon />)];
       let scanners = [listItemsGenerator('Used Scanners', <BuildIcon />)];
       let severityCounts = [listItemsGenerator('Severity of Items', <BugReportIcon />)];
       let assets = [listItemsGenerator('Assets', <DevicesIcon />)];
       let vulnerabilities = [listItemsGenerator('Vulnerabilities', <SecurityIcon />)];
 
+      // Data loop
       for (const [key, value] of Object.entries(source)) {
         // Example of use for Switch
         switch (key) {
@@ -279,7 +283,7 @@ const Dashboard = () => {
                   showId && (
                     assets.push(
                       <div className={classes.assetsItem} key={generateId()}>
-                        <div className={classes.item}><span className={classes.fontWeightBold}>{capitalizeFirstLetter(key)}</span>: {format(new Date(value), 'MM/dd/yyyy')}</div>
+                        <div className={classes.item}><span className={classes.fontWeightBold}>{capitalizeFirstLetter(key)}</span>: {value}</div>
                       </div>
                     )
                   )
@@ -293,6 +297,7 @@ const Dashboard = () => {
 
               }
               assets.push(<Divider className={classes.divider} key={generateId()} />)
+              return assets
             })
             break;
           case 'vulnerabilities':
@@ -329,6 +334,7 @@ const Dashboard = () => {
                   )
                 }
               }
+              return vulnerabilities
             })
             break;
           default:
@@ -354,8 +360,8 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <div className={classes.root}>
+        {/* Header bar */}
         <AppBar position="fixed" className={classes.appBar}>
-
           <div className={classes.leftContainer}>
             <Tabs value={value} onChange={handleChange} aria-label="simple tabs">
               <Tab label="User Data" />
@@ -375,6 +381,7 @@ const Dashboard = () => {
             />
           </div>
         </AppBar>
+        {/* Tabs */}
         <TabPanel value={value} index={0}>
           <Paper className={classes.paper}>
             {userDataLoop()}
@@ -395,7 +402,6 @@ TabPanel.propTypes = {
   index: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired,
 };
-
 
 
 export default Dashboard;
